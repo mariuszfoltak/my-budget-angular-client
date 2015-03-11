@@ -1,0 +1,27 @@
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">    
+    <div class="container aside-xl">
+      <span class="navbar-brand block">My Budget</span>
+      <section class="m-b-lg">
+        <header class="wrapper text-center">
+          <strong>Sign in to your budget</strong>
+        </header>
+        <form name="loginForm" ng-submit="login(credentials)" novalidate>
+          <div class="list-group">
+            <div class="list-group-item">
+              <input type="text" placeholder="Email"  id="username" ng-model="credentials.username" 
+                     class="form-control no-border">
+            </div>
+            <div class="list-group-item">
+               <input type="password" placeholder="Password" id="password" ng-model="credentials.password"
+                      class="form-control no-border">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+          <div class="text-center m-t m-b"><a href="#"><small>Forgot password?</small></a></div>
+          <div class="line line-dashed"></div>
+          <p class="text-muted text-center"><small>Do not have an account?</small></p>
+          <a href="signup.html" class="btn btn-lg btn-default btn-block">Create an account</a>
+        </form>
+      </section>
+    </div>
+  </section>
