@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myBudget', [
     'ngRoute',
+    'ui.bootstrap',
     'myBudget.main',
     'myBudget.login',
     'myBudget.authentication'
