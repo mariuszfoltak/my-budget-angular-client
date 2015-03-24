@@ -5,42 +5,6 @@
  */
 angular.module('app')
 
-    .service('Session', function () {
-        this.create = function (username, password) {
-            localStorage["username"] = username;
-            localStorage["password"] = password;
-        };
-        this.destroy = function () {
-            localStorage["username"] = null;
-            localStorage["password"] = null;
-        };
-        this.getUsername = function () {
-            return localStorage["username"];
-        };
-        this.getPassword = function () {
-            return localStorage["password"];
-        };
-    })
-
-    .factory('AuthService', function ($http, Session) {
-        var authService = {};
-
-        authService.login = function (credentials) {
-            Session.create(credentials.username, credentials.password);
-            $http.defaults.headers.common["Authorization-User"] = credentials.username;
-            $http.defaults.headers.common["Authorization-Password"] = credentials.password;
-        };
-
-        authService.logout = function () {
-            Session.destroy();
-        };
-
-        authService.isAuthenticated = function () {
-            return !!Session.getUsername();
-        };
-
-        return authService;
-    })
     .run(
     ['$rootScope', '$state', '$stateParams', 'AuthService', '$location',
         function ($rootScope, $state, $stateParams, AuthService, $location) {
@@ -59,6 +23,43 @@ angular.module('app')
                     url: '/app',
                     templateUrl: 'tpl/app.html'
                 })
+                .state('app.ui', {
+                    url: '/ui',
+                    template: '<div ui-view class="fade-in-up"></div>'
+                })
+                .state('app.ui.transactions', {
+                    url: '/transactions',
+                    templateUrl: 'modules/transactions/transaction.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load('toaster').then(
+                                    function () {
+                                        return $ocLazyLoad.load('modules/transactions/transaction.js');
+                                    }
+                                );
+                            }]
+                    }
+                })
+                .state('access.signin', {
+                    url: '/signin',
+                    templateUrl: 'modules/authentication/signin.html',
+                    resolve: {
+                        deps: ['uiLoad',
+                            function (uiLoad) {
+                                return uiLoad.load(['modules/authentication/signin.js']);
+                            }]
+                    }
+                })
+                .state("otherwise", {
+                    url: "*path",
+                    template: "",
+                    controller: ['$state', function ($state) {
+                        $state.go('app.ui.transactions');
+                    }]
+                })
+
+
                 .state('app.dashboard-v1', {
                     url: '/dashboard-v1',
                     templateUrl: 'tpl/app_dashboard_v1.html',
@@ -78,10 +79,6 @@ angular.module('app')
                                 return $ocLazyLoad.load(['js/controllers/chart.js']);
                             }]
                     }
-                })
-                .state('app.ui', {
-                    url: '/ui',
-                    template: '<div ui-view class="fade-in-up"></div>'
                 })
                 .state('app.ui.buttons', {
                     url: '/buttons',
@@ -435,16 +432,6 @@ angular.module('app')
                     url: '/access',
                     template: '<div ui-view class="fade-in-right-big smooth"></div>'
                 })
-                .state('access.signin', {
-                    url: '/signin',
-                    templateUrl: 'modules/authentication/signin.html',
-                    resolve: {
-                        deps: ['uiLoad',
-                            function (uiLoad) {
-                                return uiLoad.load(['modules/authentication/signin.js']);
-                            }]
-                    }
-                })
                 .state('access.signup', {
                     url: '/signup',
                     templateUrl: 'tpl/page_signup.html',
@@ -662,13 +649,7 @@ angular.module('app')
                     url: '/playlist/{fold}',
                     templateUrl: 'tpl/music.playlist.html'
                 })
-                .state("otherwise", {
-                    url: "*path",
-                    template: "",
-                    controller: ['$state', function ($state) {
-                        $state.go('/foo')
-                    }]
-                });
+            ;
         }
     ]
 );

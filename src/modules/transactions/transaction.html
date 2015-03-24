@@ -1,37 +1,29 @@
 <div class="bg-light lter b-b wrapper-md">
   <h1 class="m-n font-thin h3">Portlet</h1>
+    <toaster-container toaster-options="{'position-class': 'toast-top-left', 'close-button':true}"></toaster-container>
 </div>
 <div class="wrapper-md">
   <div class="row">
-    <div class="col-sm-3 connected" ui-jq="sortable" ui-options="{items:'.panel', handle:'.panel-heading', connectWith:'.connected'}">
-      <div class="panel panel-info">
+    <div class="col-sm-2 connected" ui-jq="sortable" ui-options="{items:'.panel', handle:'.panel-heading', connectWith:'.connected'}">
+      <div class="panel panel-info" ng-controller="AccountController">
         <div class="panel-heading">
+            <a href ng-click="showAddAccountDialog()">
+                <i class="glyphicon glyphicon-plus pull-right"></i>
+            </a>
           Konta
         </div>
         <div class="list-group bg-white">
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-envelope"></i> Inbox
-          </a>
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-eye"></i> Profile visits
-          </a>
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-phone"></i> Call
-          </a>
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-comments-o"></i> Messages
-          </a>
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-bookmark"></i> Bookmarks
-          </a>
-          <a href class="list-group-item">
-            <i class="fa fa-fw fa-bell"></i> Notifications
-          </a>
+          <span href class="list-group-item" ng-repeat="account in accounts">
+              <a href ng-click="showRemoveConfirmation(account)">
+                <i class="glyphicon glyphicon-remove pull-right"></i>
+              </a>
+            <i class="fa fa-fw icon-wallet"></i> {{account.name}}
+          </span>
         </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          News <span class="badge">32</span>                    
+          News <span class="badge">32</span>
         </div>
         <div class="panel-body">
           <article class="media">
@@ -41,7 +33,7 @@
                 <i class="fa fa-bold fa-stack-1x text-white"></i>
               </span>
             </div>
-            <div class="media-body">                        
+            <div class="media-body">
               <a href class="h4">Bootstrap 3: What you need to know</a>
               <small class="block m-t-xs">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small>
               <em class="text-xs">Posted on <span class="text-danger">Feb 23, 2013</span></em>
@@ -135,7 +127,7 @@
         </ul>
       </div>
       <div class="panel panel-default">
-        <div class="panel-heading">                    
+        <div class="panel-heading">
           <span class="label bg-dark">15</span> Inbox
         </div>
         <div class="panel-body">
@@ -153,7 +145,7 @@
           </article>
           <div class="line pull-in"></div>
           <article class="media">
-            <span class="pull-left thumb-sm"><i class="fa fa-file-o fa-3x"></i></span>                
+            <span class="pull-left thumb-sm"><i class="fa fa-file-o fa-3x"></i></span>
             <div class="media-body">
               <div class="pull-right text-center text-muted">
                 <strong class="h4">17</strong><br>
@@ -176,7 +168,7 @@
             </div>
           </article>
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 </div>
