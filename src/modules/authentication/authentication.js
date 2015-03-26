@@ -2,18 +2,18 @@ angular.module('app.authentication', [])
 
     .service('Session', function () {
         this.create = function (username, password) {
-            localStorage["username"] = username;
-            localStorage["password"] = password;
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
         };
         this.destroy = function () {
-            localStorage["username"] = null;
-            localStorage["password"] = null;
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
         };
         this.getUsername = function () {
-            return localStorage["username"];
+            return localStorage.getItem("username");
         };
         this.getPassword = function () {
-            return localStorage["password"];
+            return localStorage.getItem("password");
         };
     })
 
@@ -40,22 +40,5 @@ angular.module('app.authentication', [])
 
         return authService;
     }])
-
-    .run(
-    ['$rootScope', '$state', '$http', 'AuthService',
-        function ($rootScope, $state, $http, AuthService) {
-            if (AuthService.isAuthenticated()) {
-                $http.defaults.headers.common["Authorization-User"] = AuthService.getSession().getUsername();
-                $http.defaults.headers.common["Authorization-Password"] = AuthService.getSession().getPassword();
-            }
-            $rootScope.$on("$stateChangeStart", function (event, next) {
-                if (!AuthService.isAuthenticated()) {
-                    if (next.name !== "access.signin") {
-                        event.preventDefault();
-                        $state.go('access.signin');
-                    }
-                }
-            });
-        }])
 
 ;
