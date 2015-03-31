@@ -18,6 +18,18 @@ module.exports.accounts = function () {
                 accounts.push({id: i++, name: data.name});
                 return [201];
             });
+
+            $httpBackend.whenDELETE(/accounts/).respond(function(method, url){
+                var accountId = url.split('/').pop();
+                var index;
+                for (index = 0; index < accounts.length; ++index) {
+                    if(accounts[index].id == accountId) {
+                        break;
+                    }
+                }
+                accounts.splice(index, 1);
+                return [200];
+            });
         });
 }
 

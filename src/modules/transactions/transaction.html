@@ -14,7 +14,7 @@
         </div>
         <div class="list-group bg-white">
           <span href class="list-group-item" ng-repeat="account in accounts">
-              <a class="pull-right" href ng-click="showRemoveConfirmation(account)">
+              <a class="pull-right removeAccountButton" href ng-click="showRemoveConfirmation(account)">
                 <i class="glyphicon glyphicon-remove"></i>
               </a>
             <i class="fa fa-fw icon-wallet"></i> {{account.name}}
