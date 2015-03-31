@@ -7,15 +7,15 @@
     <div class="col-sm-2 connected" ui-jq="sortable" ui-options="{items:'.panel', handle:'.panel-heading', connectWith:'.connected'}">
       <div class="panel panel-info" ng-controller="AccountController">
         <div class="panel-heading">
-            <a href ng-click="showAddAccountDialog()">
-                <i class="glyphicon glyphicon-plus pull-right"></i>
+            <a href class="pull-right" ng-click="showAddAccountDialog()" id="addAccountButton">
+                <i class="glyphicon glyphicon-plus "></i>
             </a>
           Konta
         </div>
         <div class="list-group bg-white">
           <span href class="list-group-item" ng-repeat="account in accounts">
-              <a href ng-click="showRemoveConfirmation(account)">
-                <i class="glyphicon glyphicon-remove pull-right"></i>
+              <a class="pull-right" href ng-click="showRemoveConfirmation(account)">
+                <i class="glyphicon glyphicon-remove"></i>
               </a>
             <i class="fa fa-fw icon-wallet"></i> {{account.name}}
           </span>

@@ -31,13 +31,15 @@ angular.module('app')
                     url: '/transactions',
                     templateUrl: 'modules/transactions/transaction.html',
                     resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load('toaster').then(
-                                    function () {
-                                        return $ocLazyLoad.load('modules/transactions/transaction.js');
-                                    }
-                                );
+                        deps: ['$ocLazyLoad', '$timeout',
+                            function ($ocLazyLoad, $timeout) {
+                                return $timeout(function () {
+                                    return $ocLazyLoad.load('toaster').then(
+                                        function () {
+                                            return $ocLazyLoad.load('modules/transactions/transaction.js');
+                                        }
+                                    );
+                                });
                             }]
                     }
                 })
@@ -45,9 +47,11 @@ angular.module('app')
                     url: '/signin',
                     templateUrl: 'modules/authentication/signin.html',
                     resolve: {
-                        deps: ['uiLoad',
-                            function (uiLoad) {
-                                return uiLoad.load(['modules/authentication/signin.js']);
+                        deps: ['uiLoad', '$timeout',
+                            function (uiLoad, $timeout) {
+                                return $timeout(function () {
+                                    return uiLoad.load(['modules/authentication/signin.js']);
+                                });
                             }]
                     }
                 })

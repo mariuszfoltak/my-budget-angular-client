@@ -1,19 +1,21 @@
 exports.config = {
-  allScriptsTimeout: 11000,
+    allScriptsTimeout: 11000,
 
-  specs: [
-    '*.js'
-  ],
+    specs: [
+        'mocks.js',
+        'authentication.js',
+        'accounts.js',
+    ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+    capabilities: {
+        'browserName': 'firefox'
+    },
 
-  baseUrl: 'http://localhost:8000/src/',
+    baseUrl: 'http://localhost:8000/src/',
 
-  framework: 'jasmine',
+    framework: 'jasmine',
 
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
-  }
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 30000
+    }
 };
