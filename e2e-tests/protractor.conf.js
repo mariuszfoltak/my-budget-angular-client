@@ -5,6 +5,7 @@ exports.config = {
         'mocks.js',
         'authentication.js',
         'accounts.js',
+        'categories.js',
     ],
 
     capabilities: {
@@ -16,6 +17,12 @@ exports.config = {
     framework: 'jasmine',
 
     jasmineNodeOpts: {
-        defaultTimeoutInterval: 30000
+        defaultTimeoutInterval: 30000,
+        print: function() {}
+    },
+
+    onPrepare: function() {
+        var SpecReporter = require('jasmine-spec-reporter');
+        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true, displayPendingSpec: true}));
     }
 };

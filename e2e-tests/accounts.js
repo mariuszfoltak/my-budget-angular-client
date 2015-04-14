@@ -4,8 +4,8 @@ describe('Accounts module', function () {
     var mocks = require('./mocks');
 
     beforeEach(function () {
-        browser.addMockModule('authMock', mocks.auth, {username: 'mariusz', password: 'abc123'});
-        browser.addMockModule('httpBackendMock', mocks.accounts);
+        browser.addMockModule(mocks.auth.name, mocks.auth.module, {username: 'mariusz', password: 'abc123'});
+        browser.addMockModule(mocks.accounts.name, mocks.accounts.module);
     });
 
     it('shows an accounts list', function () {
@@ -14,6 +14,7 @@ describe('Accounts module', function () {
 
         var accounts = element.all(by.repeater('account in accounts'));
         expect(accounts.count()).toBe(3);
+
 
         //check if accounts list has expected elements
         accounts.map(function (account) {

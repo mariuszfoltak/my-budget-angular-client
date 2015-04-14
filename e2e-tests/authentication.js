@@ -6,7 +6,7 @@ describe('Authentication module', function () {
     var mocks = require('./mocks');
 
     beforeEach(function () {
-        browser.addMockModule('authMock', mocks.auth);
+        browser.addMockModule(mocks.auth.name, mocks.auth.module);
     });
 
     it('should automatically redirect to /access/login when location hash/fragment is empty', function () {
