@@ -123,4 +123,62 @@ describe('Categories module', function () {
 
         });
     });
+
+    describe('creating a new category', function () {
+
+        it('adds a new category', function () {
+            browser.get('#/app/ui/transactions');
+            browser.sleep(500);
+
+            element(by.className('btn-add')).click();
+            var modal = element(by.className('modal-content'));
+            modal.element(by.model('category.name')).sendKeys('hobby');
+            modal.element(by.id('btn-accept')).click();
+
+            expect(browser.isElementPresent(modal)).toBeFalsy();
+
+            var toaster = element(by.id('toast-container'));
+            expect(toaster.isDisplayed()).toBeTruthy();
+            expect(toaster.isElementPresent(by.className('toast-success'))).toBeTruthy();
+
+            var categories = element.all(by.repeater('category in ctrl.categories'));
+            expect(categories.count()).toBe(4);
+            categories.map(function (categoryElement) {
+                return categoryElement.getText();
+            }).then(function (categoriesNames) {
+                expect(categoriesNames).toContain('hobby');
+            });
+        });
+
+        it('does not add a category when operation is not been confirmed', function () {
+            browser.get('#/app/ui/transactions');
+            browser.sleep(500);
+
+            element(by.className('btn-add')).click();
+            var modal = element(by.className('modal-content'));
+            modal.element(by.model('category.name')).sendKeys('fruits');
+            modal.element(by.id('btn-decline')).click();
+
+            expect(browser.isElementPresent(modal)).toBeFalsy();
+            expect(element.all(by.repeater('category in ctrl.categories')).count()).toBe(3);
+        });
+
+        it('shows error message when api returns an exception', function () {
+            browser.get('#/app/ui/transactions');
+            browser.sleep(500);
+
+            element(by.className('btn-add')).click();
+            var modal = element(by.className('modal-content'));
+            modal.element(by.model('category.name')).sendKeys('category with error');
+            modal.element(by.id('btn-accept')).click();
+
+            expect(browser.isElementPresent(modal)).toBeFalsy();
+
+            var toaster = element(by.id('toast-container'));
+            expect(toaster.isDisplayed()).toBeTruthy();
+            expect(toaster.isElementPresent(by.className('toast-error'))).toBeTruthy();
+
+            expect(element.all(by.repeater('category in ctrl.categories')).count()).toBe(3);
+        });
+    });
 });

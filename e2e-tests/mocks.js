@@ -60,8 +60,10 @@ module.exports.categories = {
 
                 $httpBackend.whenPOST(/categories/).respond(function (method, url, jsonData) {
                     data = JSON.parse(jsonData);
-                    categories.push({id: i++, name: data.name});
-                    return [201];
+                    if (data.name.indexOf('error') > -1) {
+                        return [500];
+                    }
+                    return [201, {id: ++i, name: data.name}];
                 });
 
                 $httpBackend.whenDELETE(/categories/).respond(function (method, url) {
