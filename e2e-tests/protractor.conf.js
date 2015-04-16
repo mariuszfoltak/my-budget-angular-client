@@ -14,15 +14,16 @@ exports.config = {
 
     baseUrl: 'http://localhost:8000/src/',
 
-    framework: 'jasmine',
+    framework: 'jasmine2',
 
     jasmineNodeOpts: {
         defaultTimeoutInterval: 30000,
-        print: function() {}
+        print: function () {
+        }
     },
 
-    onPrepare: function() {
+    onPrepare: function () {
         var SpecReporter = require('jasmine-spec-reporter');
-        jasmine.getEnv().addReporter(new SpecReporter());
+        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
     }
 };

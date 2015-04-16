@@ -79,9 +79,19 @@ app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaste
 
     categoriesRest.getList().then(function (categories) {
         that.categories = categories;
+        that.categories.forEach(function (category) {
+            category.subCategories = [];
+            category.getList('category').then(function (subCategories) {
+                category.subCategories = subCategories;
+            });
+        });
     });
 
-    that.removeCategory = function (category) {
+    that.getSubItems = function (category) {
+        return category.subCategories;
+    };
+
+    that.removeCategory = function (category, parent) {
         var modalInstance = $modal.open({
             templateUrl: 'modules/transactions/confirmation-modal.html',
             controller: 'RemoveCategoryModalController',
@@ -90,13 +100,20 @@ app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaste
 
         modalInstance.result.then(function () {
             category.remove().then(function () {
-                that.categories = _.without(that.categories, category);
+                if (parent) {
+                    console.log("Usuwam z parenta");
+                    parent.subCategories = _.without(parent.subCategories, category);
+                } else {
+                    that.categories = _.without(that.categories, category);
+                }
+                // FIXME: add a title and body of toaster
                 toaster.pop('success', 'title', 'body');
             }, function () {
+                // FIXME: add a title and body of toaster
                 toaster.pop('error', 'title', 'body');
             });
         });
-    }
+    };
 
     that.addCategory = function () {
         var modalInstance = $modal.open({
@@ -130,7 +147,7 @@ app.controller('AddCategoryModalController', ['$modalInstance', function ($modal
     };
     this.accept = function (category) {
         $modalInstance.close(category);
-    }
+    };
     this.cancel = $modalInstance.dismiss;
 }]);
 

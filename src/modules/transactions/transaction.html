@@ -38,11 +38,11 @@
                     </span>
 
                     <div class="nav nav-sub">
-                        <span style="padding-left: 30px;" href class="list-group-item" ng-repeat="subCategory in category.subCategories">
-                            <a class="pull-right removeAccountButton" href ng-click="ctrl.removeCategory()">
+                        <span style="padding-left: 30px;" href class="list-group-item" ng-repeat="subItem in ctrl.getSubItems(category)">
+                            <a class="pull-right remove-button" href ng-click="ctrl.removeCategory(subItem, category)">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </a>
-                            <i class="fa fa-fw icon-wallet"></i> {{subCategory.name}}
+                            <i class="fa fa-fw icon-wallet"></i> {{subItem.name}}
                         </span>
                     </div>
                 </span>

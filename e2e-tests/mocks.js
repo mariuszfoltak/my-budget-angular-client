@@ -34,7 +34,7 @@ module.exports.accounts = {
                 });
             });
     }
-}
+};
 
 
 module.exports.categories = {
@@ -45,18 +45,22 @@ module.exports.categories = {
 
                 var i = 0, categories = [];
                 categories.push({
-                    id: ++i, name: 'food',
+                    id: 1, name: 'food',
                     subCategories: [
-                        {id: ++i, name: 'candies'},
-                        {id: ++i, name: 'vegetables'}
+                        {id: 101, name: 'candies'},
+                        {id: 3, name: 'vegetables'}
                     ]
                 });
-                categories.push({id: ++i, name: 'house'});
-                categories.push({id: ++i, name: 'car'});
+                categories.push({id: 4, name: 'house'});
+                categories.push({id: 100, name: 'car'});
 
                 $httpBackend.whenGET(/.*\.(js|tpl|html)/).passThrough();
 
-                $httpBackend.whenGET(/categories/).respond(categories);
+                $httpBackend.whenGET(/categories$/).respond(categories);
+
+                $httpBackend.whenGET(/categories\/1\/category$/).respond(categories[0].subCategories);
+
+                $httpBackend.whenGET(/categories\/\d+\/category$/).respond([]);
 
                 $httpBackend.whenPOST(/categories/).respond(function (method, url, jsonData) {
                     data = JSON.parse(jsonData);
@@ -66,14 +70,15 @@ module.exports.categories = {
                     return [201, {id: ++i, name: data.name}];
                 });
 
-                $httpBackend.whenDELETE(/categories/).respond(function (method, url) {
-                    var accountId = url.split('/').pop();
-                    if (accountId == 5) return [503];
+                $httpBackend.whenDELETE(/categories/).respond(function (method, url, jsonData) {
+                    console.log(url);
+                    var categoryId = url.split('/').pop();
+                    if (categoryId > 99) return [503];
                     return [200];
                 });
             });
     }
-}
+};
 
 module.exports.auth = {
     name: 'authMock',
@@ -89,4 +94,4 @@ module.exports.auth = {
                 }
             });
     }
-}
+};
