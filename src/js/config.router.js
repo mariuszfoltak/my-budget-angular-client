@@ -32,14 +32,12 @@ angular.module('app')
                     templateUrl: 'modules/transactions/transaction.html',
                     resolve: {
                         deps: ['$ocLazyLoad', '$timeout',
-                            function ($ocLazyLoad, $timeout) {
-                                return $timeout(function () {
-                                    return $ocLazyLoad.load('toaster').then(
-                                        function () {
-                                            return $ocLazyLoad.load('modules/transactions/transaction.js');
-                                        }
-                                    );
-                                });
+                            function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load([
+                                        'toaster',
+                                        'modules/transactions/transaction.js',
+                                        'modules/transactions/categories.js'
+                                    ]);
                             }]
                     }
                 })
