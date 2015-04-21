@@ -67,10 +67,6 @@ app.controller('CreateAccountModalController', ['$scope', '$modalInstance', 'Acc
     $scope.cancel = $modalInstance.dismiss;
 }]);
 
-app.factory('Category', ['$resource', function ($resource) {
-    return $resource("http://apimybudget-mfoltak.rhcloud.com/api/v1/categories/:id", {id: '@id'});
-}]);
-
 app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaster', function ($scope, Restangular, $modal, toaster) {
     var that = this;
     that.categories = [];
@@ -101,7 +97,6 @@ app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaste
         modalInstance.result.then(function () {
             category.remove().then(function () {
                 if (parent) {
-                    console.log("Usuwam z parenta");
                     parent.subCategories = _.without(parent.subCategories, category);
                 } else {
                     that.categories = _.without(that.categories, category);
@@ -115,7 +110,7 @@ app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaste
         });
     };
 
-    that.addCategory = function () {
+    that.addCategory = function (parent) {
         var modalInstance = $modal.open({
             templateUrl: 'modules/transactions/category-create-modal.html',
             controller: 'AddCategoryModalController',
@@ -124,10 +119,14 @@ app.controller('CategoryController', ['$scope', 'Restangular', '$modal', 'toaste
 
         modalInstance.result.then(function (category) {
             categoriesRest.post(category).then(function (category) {
-                that.categories.push(category);
+                if (parent) {
+                    parent.subCategories.push(category);
+                } else {
+                    that.categories.push(category);
+                }
                 toaster.pop('success', 'Dodano kategorię', 'Dodano kategorię ' + category.name);
             }, function () {
-                toaster.pop('error', 'Wystąpił błąd', 'Nie udało się dodać kategorii, gdyż wystąpił błąd' + category.name);
+                toaster.pop('error', 'Wystąpił błąd', 'Nie udało się dodać kategorii, gdyż wystąpił błąd');
             });
         });
     };

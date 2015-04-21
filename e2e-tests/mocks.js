@@ -62,7 +62,7 @@ module.exports.categories = {
 
                 $httpBackend.whenGET(/categories\/\d+\/category$/).respond([]);
 
-                $httpBackend.whenPOST(/categories/).respond(function (method, url, jsonData) {
+                $httpBackend.whenPOST(/categories$/).respond(function (method, url, jsonData) {
                     data = JSON.parse(jsonData);
                     if (data.name.indexOf('error') > -1) {
                         return [500];

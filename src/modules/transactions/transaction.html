@@ -31,6 +31,9 @@
             <div class="list-group bg-white">
                 <span ng-repeat="category in ctrl.categories" ng-class="{active: ctrl.selectedCategoryId == category.name}">
                     <span href class="list-group-item" ng-click="ctrl.selectedCategoryId = category.name">
+                        <a href class="pull-right btn-add" ng-click="ctrl.addCategory(category)">
+                            <i class="glyphicon glyphicon-plus "></i>
+                        </a>
                         <a class="pull-right removeButton" href ng-click="ctrl.removeCategory(category)">
                             <i class="glyphicon glyphicon-remove"></i>
                         </a>
