@@ -21,36 +21,7 @@
           </span>
         </div>
       </div>
-        <div class="panel panel-info" ng-controller="CategoryController as ctrl">
-            <div class="panel-heading">
-                <a href class="pull-right btn-add" ng-click="ctrl.addCategory()">
-                    <i class="glyphicon glyphicon-plus "></i>
-                </a>
-                Kategorie
-            </div>
-            <div class="list-group bg-white">
-                <span ng-repeat="category in ctrl.categories" ng-class="{active: ctrl.selectedCategoryId == category.name}">
-                    <span href class="list-group-item" ng-click="ctrl.selectedCategoryId = category.name">
-                        <a href class="pull-right btn-add" ng-click="ctrl.addCategory(category)">
-                            <i class="glyphicon glyphicon-plus "></i>
-                        </a>
-                        <a class="pull-right removeButton" href ng-click="ctrl.removeCategory(category)">
-                            <i class="glyphicon glyphicon-remove"></i>
-                        </a>
-                        <i class="fa fa-fw icon-wallet"></i> {{category.name}}
-                    </span>
-
-                    <div class="nav nav-sub">
-                        <span style="padding-left: 30px;" href class="list-group-item" ng-repeat="subItem in ctrl.getSubItems(category)">
-                            <a class="pull-right remove-button" href ng-click="ctrl.removeCategory(subItem, category)">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </a>
-                            <i class="fa fa-fw icon-wallet"></i> {{subItem.name}}
-                        </span>
-                    </div>
-                </span>
-            </div>
-        </div>
+        <my-category-menu></my-category-menu>
       <div class="panel panel-info">
         <div class="panel-heading">
           News <span class="badge">32</span>

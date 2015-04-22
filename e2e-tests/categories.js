@@ -7,7 +7,7 @@ function getText(item) {
 describe('Categories module', function () {
     var mocks = require('./mocks');
     var toaster = element(by.id('toast-container'));
-    var categories = element.all(by.repeater('category in ctrl.categories'));
+    var categories = element.all(by.repeater('item in ctrl.getItems()'));
     var modal = element(by.className('modal-content'));
 
     beforeEach(function () {
@@ -39,7 +39,7 @@ describe('Categories module', function () {
             categories.then(function (categoryElems) {
                 var mainCategoryElem = categoryElems[0];
                 mainCategoryElem.all(by.className('list-group-item')).get(0).click();
-                var subCategories = mainCategoryElem.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategoryElem.all(by.repeater('subItem in ctrl.getSubItems(item)'));
                 expect(subCategories.count()).toBe(2);
 
                 //check if subCategories list has expected elements
@@ -177,7 +177,7 @@ describe('Categories module', function () {
                 var mainCategory = categories[0];
                 mainCategory.all(by.className('list-group-item')).get(0).click();
 
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 subCategories.then(function (subCategories) {
                     subCategories[1].element(by.className('remove-button')).click();
@@ -202,7 +202,7 @@ describe('Categories module', function () {
                 var mainCategory = categories[0];
                 mainCategory.all(by.className('list-group-item')).get(0).click();
 
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 subCategories.then(function (subCategories) {
                     subCategories[0].element(by.className('remove-button')).click();
@@ -232,7 +232,7 @@ describe('Categories module', function () {
                 var mainCategory = categories[0];
                 mainCategory.all(by.className('list-group-item')).get(0).click();
 
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 subCategories.then(function (subCategories) {
                     subCategories[1].element(by.className('remove-button')).click();
@@ -262,7 +262,7 @@ describe('Categories module', function () {
 
             categories.then(function (categories) {
                 var mainCategory = categories[0];
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 mainCategory.element(by.className('btn-add')).click();
 
@@ -280,7 +280,7 @@ describe('Categories module', function () {
 
             categories.then(function (categories) {
                 var mainCategory = categories[0];
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 mainCategory.element(by.className('btn-add')).click();
 
@@ -302,7 +302,7 @@ describe('Categories module', function () {
 
             categories.then(function (categories) {
                 var mainCategory = categories[1];
-                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(category)'));
+                var subCategories = mainCategory.all(by.repeater('subItem in ctrl.getSubItems(item)'));
 
                 mainCategory.element(by.className('btn-add')).click();
 

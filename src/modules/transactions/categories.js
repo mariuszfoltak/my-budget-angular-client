@@ -2,6 +2,7 @@ app.controller('CategoryController',
     ['$scope', 'Restangular', '$modal', 'toaster', function ($scope, Restangular, $modal, toaster) {
 
         var that = this;
+        that.name = "Kategorie";
         that.categories = [];
 
         var categoriesRest = Restangular.all('categories');
@@ -16,11 +17,25 @@ app.controller('CategoryController',
             });
         });
 
+        that.getItems = function () {
+            return that.categories;
+        };
+
         that.getSubItems = function (category) {
             return category.subCategories;
         };
 
-        that.removeCategory = function (category, parent) {
+        var selectedItem = null;
+
+        that.isSelected = function(item){
+            return item == selectedItem;
+        };
+
+        that.select = function(item) {
+            selectedItem = item;
+        };
+
+        that.removeItem = function (category, parent) {
             var modalInstance = $modal.open({
                 templateUrl: 'modules/transactions/confirmation-modal.html',
                 controller: 'RemoveCategoryModalController',
@@ -43,7 +58,7 @@ app.controller('CategoryController',
             });
         };
 
-        that.addCategory = function (parent) {
+        that.createItem = function (parent) {
             var modalInstance = $modal.open({
                 templateUrl: 'modules/transactions/category-create-modal.html',
                 controller: 'AddCategoryModalController',
@@ -64,6 +79,18 @@ app.controller('CategoryController',
             });
         };
     }]);
+
+app.directive('myCategoryMenu', function() {
+    return {
+        scope: {},
+        templateUrl: 'modules/transactions/listbox.html',
+        replace: true,
+        controller: 'CategoryController',
+        controllerAs: 'ctrl',
+        bindToController: true
+    };
+});
+
 
 app.controller('RemoveCategoryModalController', ['$modalInstance', function ($modalInstance) {
     this.getTitle = function () {

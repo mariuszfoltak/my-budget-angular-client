@@ -1,25 +1,25 @@
-<div class="panel panel-info" ng-controller="CategoryController as ctrl">
+<div class="panel panel-info">
     <div class="panel-heading">
-        <a href class="pull-right btn-add" ng-click="ctrl.addCategory()">
+        <a href class="pull-right btn-add" ng-click="ctrl.createItem()">
             <i class="glyphicon glyphicon-plus "></i>
         </a>
-        Kategorie
+        {{ctrl.name}}
     </div>
     <div class="list-group bg-white">
-        <span ng-repeat="category in ctrl.categories" ng-class="{active: ctrl.selectedCategoryId == category.name}">
-            <span href class="list-group-item" ng-click="ctrl.selectedCategoryId = category.name">
-                <a href class="pull-right btn-add" ng-click="ctrl.addCategory(category)">
+        <span ng-repeat="item in ctrl.getItems()" ng-class="{active: ctrl.isSelected(item)}">
+            <span href class="list-group-item" ng-click="ctrl.select(item)">
+                <a href class="pull-right btn-add" ng-click="ctrl.createItem(item)">
                     <i class="glyphicon glyphicon-plus "></i>
                 </a>
-                <a class="pull-right removeButton" href ng-click="ctrl.removeCategory(category)">
+                <a class="pull-right removeButton" href ng-click="ctrl.removeItem(item)">
                     <i class="glyphicon glyphicon-remove"></i>
                 </a>
-                <i class="fa fa-fw icon-wallet"></i> {{category.name}}
+                <i class="fa fa-fw icon-wallet"></i> {{item.name}}
             </span>
 
             <div class="nav nav-sub">
-                <span style="padding-left: 30px;" href class="list-group-item" ng-repeat="subItem in ctrl.getSubItems(category)">
-                    <a class="pull-right remove-button" href ng-click="ctrl.removeCategory(subItem, category)">
+                <span style="padding-left: 30px;" href class="list-group-item" ng-repeat="subItem in ctrl.getSubItems(item)">
+                    <a class="pull-right remove-button" href ng-click="ctrl.removeItem(subItem, item)">
                         <i class="glyphicon glyphicon-remove"></i>
                     </a>
                     <i class="fa fa-fw icon-wallet"></i> {{subItem.name}}
