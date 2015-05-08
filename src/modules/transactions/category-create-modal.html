@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title">Dodaj kategorię</h3>
+</div>
+<div class="modal-body">
+    <label>Nazwa kategorii</label>
+    <input type="text" ng-model="category.name"/>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" id="btn-decline" ng-click="ctrl.cancel()">Anuluj</button>
+    <button class="btn btn-primary" id="btn-accept" ng-click="ctrl.accept(category)">Zapisz</button>
+</div>

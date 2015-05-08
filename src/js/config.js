@@ -29,6 +29,9 @@ var app =
             // Tell the module to store the language in the local storage
             $translateProvider.useLocalStorage();
         }])
+        .config(['RestangularProvider', function(RestangularProvider) {
+            RestangularProvider.setBaseUrl('http://apimybudget-mfoltak.rhcloud.com/api/v1/');
+        }])
         .run(
         ['$rootScope', '$state', '$http', 'AuthService',
             function ($rootScope, $state, $http, AuthService) {

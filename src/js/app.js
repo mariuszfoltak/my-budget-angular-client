@@ -15,5 +15,6 @@ angular.module('app', [
     'ui.load',
     'ui.jq',
     'oc.lazyLoad',
-    'app.authentication'
+    'app.authentication',
+    'restangular'
 ]);
